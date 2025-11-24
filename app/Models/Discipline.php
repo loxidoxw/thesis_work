@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discipline extends Model
 {
-    //
+    protected $fillable = ['name'];
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
 }
