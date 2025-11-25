@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Discipline>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
  */
-class DisciplineFactory extends Factory
+class CourseFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,9 @@ class DisciplineFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title(),
+            'description' => $this->faker->text(),
+            'image' => 'courses/thumbnails/test_thumbnail.png'
         ];
     }
 }

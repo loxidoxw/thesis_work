@@ -17,7 +17,9 @@ class SectionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'course_id' => $this->faker->numberBetween(1, 10),
+            'title' => $this->faker->title(),
+            'order' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

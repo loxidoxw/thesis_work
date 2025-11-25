@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
+    use hasFactory;
     protected $fillable = ['name'];
 
-    public function discipline()
+    public function course()
     {
-        return $this->belongsTo(Discipline::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function lessons()

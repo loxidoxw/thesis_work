@@ -17,7 +17,9 @@ class MaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'lesson_id' => $this->faker->numberBetween(1, 10),
+            'type' => 'file',
+            'file_path' => 'courses/thumbnails/test_thumbnail.png',
         ];
     }
 }
