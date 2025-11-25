@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->integer('order');
-            $table->string('material_url')->nullable();
             $table->timestamps();
         });
     }

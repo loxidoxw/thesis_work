@@ -17,7 +17,11 @@ class LessonFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'section_id' => $this->faker->numberBetween(1, 10),
+            'title' => $this->faker->title(),
+            'content' => $this->faker->text(),
+            'order' => $this->faker->numberBetween(1, 10),
+
         ];
     }
 }
