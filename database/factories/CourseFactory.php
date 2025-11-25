@@ -19,7 +19,7 @@ class CourseFactory extends Factory
         return [
             'title' => $this->faker->title(),
             'description' => $this->faker->text(),
-            'image' => $this->faker->imageUrl(),
+            'image' => 'courses/thumbnails/test_thumbnail.png'
         ];
     }
 }
