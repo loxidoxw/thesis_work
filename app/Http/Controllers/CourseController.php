@@ -17,10 +17,8 @@ class CourseController extends Controller
       $courses = Course::all();
        return view('courses.index', compact('courses'));
     }
-    public function show(Course $request) : View
+    public function show(Course $course) : View
     {
-        $course = $request->validated();
-      Course::find()->where('id', $course);
       return view('courses.show', compact('course'));
     }
 
