@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ParticipantsController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Course $course)
     {
-        return view('courses.participants');
+        $users = $course->users()
+//            ->where('users.id', '!=', auth()->id())
+            ->get();
+        return view('courses.participants', compact('users', 'course'));
     }
 }
