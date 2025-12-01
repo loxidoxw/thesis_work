@@ -15,7 +15,7 @@ class Section extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function lessons()
+    public function lessons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Lesson::class);
     }

@@ -19,4 +19,9 @@ class Lesson extends Model
     {
         return $this->hasMany(Material::class);
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(assignments::class);
+    }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Course\CourseStoreRequest;
 use App\Http\Requests\Course\CourseUpdateRequest;
 use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\Section;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,7 +21,12 @@ class CourseController extends Controller
     }
     public function show(Course $course) : View
     {
-      return view('courses.show', compact('course'));
+        $sections = $course->sections()->with('lessons.materials')->get();
+
+        $lessons = $sections->pluck('lessons')->flatten();
+        $materials = $lessons->pluck('materials')->flatten();
+
+      return view('courses.show', compact('course', 'sections', 'lessons', 'materials'));
     }
 
     public function create() : View
