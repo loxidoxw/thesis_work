@@ -20,7 +20,6 @@ class CourseSeeder extends Seeder
             ->count(10)
             ->has(Section::factory()->count(5)
                  ->has(Lesson::factory()->count(3)
-                    ->has(Material::factory()->count(1))
                  )
             )
             ->create();

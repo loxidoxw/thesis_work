@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Course;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class GradesController extends Controller
+class GradeController extends Controller
 {
-    public function __invoke()
+    public function index()
     {
-        return view('courses.grades');
+        return view('courses.grade');
     }
 }

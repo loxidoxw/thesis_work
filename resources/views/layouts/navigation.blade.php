@@ -13,9 +13,18 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Мої курси') }}
                     </x-nav-link>
                 </div>
+
+                    <!-- Create course link for teacher -->
+                @if (Auth::user()->role === 'teacher')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('course.create')" :active="request()->routeIs('course.create')">
+                        {{ __('Створити Курс') }}
+                    </x-nav-link>
+                </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

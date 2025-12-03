@@ -11,18 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lesson_id')->constrained()->cascadeOnDelete();
-
-            $table->enum('type', ['file', 'link']);
-
-            //file
-            $table->string('file_path')->nullable();
-
-            //link
-            $table->string('link')->nullable();
-
+            $table->foreignId('submissions_id')->constrained();
+            $table->foreignId('teacher_id')->constrained('users')->cascadeOnDelete();
+            $table->integer('grade');
             $table->timestamps();
         });
     }
@@ -32,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('grades');
     }
 };

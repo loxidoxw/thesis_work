@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use hasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['course_id', 'title', 'order'];
 
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
-    public function lessons()
+    public function lessons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Lesson::class);
     }
