@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('section_id')->constrained();
             $table->string('title');
-            $table->text('content');
-            $table->enum('type', ['lecture', 'practical', 'assignment'])->default('lecture');
+            $table->json('content')->nullable();
+            $table->enum('type', ['lecture', 'assignment'])->default('lecture');
             $table->integer('order');
             $table->timestamps();
         });

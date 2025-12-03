@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use hasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['course_id', 'title', 'order'];
 
     public function course()
     {

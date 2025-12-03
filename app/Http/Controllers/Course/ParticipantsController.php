@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ParticipantsController extends Controller
 {
-    public function __invoke(Course $course)
+    public function index(Course $course)
     {
         $users = $course->users()
 //            ->where('users.id', '!=', auth()->id())

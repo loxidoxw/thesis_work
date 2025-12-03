@@ -23,8 +23,8 @@
 
             {{-- Grades --}}
             <a
-                href="{{ route('course.grades', $course->id) }}"
-                class="py-4 block border-b-2 {{ $active === 'grades' ? 'border-white' : 'border-transparent hover:border-blue-300' }}"
+                href="{{ route('course.grade', $course->id) }}"
+                class="py-4 block border-b-2 {{ $active === 'grade' ? 'border-white' : 'border-transparent hover:border-blue-300' }}"
             >
                 Журнал оцінок
             </a>

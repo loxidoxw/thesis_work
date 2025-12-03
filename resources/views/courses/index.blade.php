@@ -15,5 +15,6 @@
                 </div>
                 @endforeach
         </div>
+        {{$courses->links()}}
     </div>
 @endsection

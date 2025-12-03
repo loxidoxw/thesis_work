@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CompetenciesController extends Controller
 {
-    public function __invoke()
+    public function index()
     {
         return view('courses.competencies');
     }

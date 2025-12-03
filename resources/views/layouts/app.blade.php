@@ -33,5 +33,8 @@
                 @yield('content')
             </main>
         </div>
+        <footer>
+            <div class="w-full h-32 bg-gray-800"></div>
+        </footer>
     </body>
 </html>

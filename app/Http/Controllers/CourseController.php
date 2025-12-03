@@ -8,25 +8,35 @@ use App\Http\Requests\Course\CourseUpdateRequest;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CourseController extends Controller
 {
-    public function index() : View
+    public function index(Course $courses) : View
     {
-      $courses = Course::all();
+        if (auth()->user()->role == 'student')
+        {
+            $courses = auth()->user()->courses()->paginate(8);
+        }
+        else
+        {
+            $courses = Course::where('teacher_id', auth()->id())->paginate(8);
+        }
+
        return view('courses.index', compact('courses'));
     }
     public function show(Course $course) : View
     {
-        $sections = $course->sections()->with('lessons.materials')->get();
+        $sections = $course->sections()->with('lessons')->get();
 
         $lessons = $sections->pluck('lessons')->flatten();
-        $materials = $lessons->pluck('materials')->flatten();
 
-      return view('courses.show', compact('course', 'sections', 'lessons', 'materials'));
+
+      return view('courses.show', compact('course', 'sections', 'lessons'));
     }
 
     public function create() : View
@@ -35,10 +45,15 @@ class CourseController extends Controller
     }
     public function store(CourseStoreRequest $request) : RedirectResponse
     {
-        $course = $request->validated();
-        Course::create($course);
+        $data = $request->validated();
 
-        return redirect()->route('courses.index');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('courses/thumbnails', 'public');
+        }
+        $data['teacher_id'] = auth()->id();
+        Course::create($data);
+
+        return redirect()->route('dashboard');
     }
 
     public function edit(Course $request) : View

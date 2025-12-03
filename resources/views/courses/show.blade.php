@@ -5,7 +5,13 @@
     @csrf
     <h3 class="w-full max-w-5xl mx-auto mt-6">{{$course->title}}</h3>
     <div aria-hidden="true" class="w-full max-w-5xl mx-auto mt-6 bg-white rounded-2xl border border-gray-100 shadow-md p-8 min-h-[220px]">
-
+        @if (Auth::user()->role === 'teacher')
+            <Div>
+            <x-nav-link :href="route('section.create', $course->id) ">
+                {{ __('Додати Тему') }}
+            </x-nav-link>
+            </Div>
+        @endif
         @foreach ($sections as $section)
             <div class="w-full bg-white rounded-2xl shadow-md p-4 mb-2 relative">
                 <div class="flex items-center space-x-2">
@@ -21,8 +27,9 @@
                 </div>
                 <div class="dropdown-section max-h-0 overflow-hidden transition-all duration-300 mt-2 space-y-2">
                     @foreach ($lessons->where('section_id', $section->id) as $lesson)
-                        <div class="w-full bg-gray-50 rounded-2xl p-3 hover:bg-gray-100 cursor-pointer">
-                            <span>{{$lesson->title}}</span>
+                        <div class="flex w-full bg-gray-50 rounded-2xl p-3 hover:bg-gray-100 cursor-pointer">
+                            <x-lesson-icon :type="$lesson->type" />
+                            <a href="{{route('lesson.show', $lesson->id)}}">{{$lesson->title}}</a>
                         </div>
                     @endforeach
                 </div>

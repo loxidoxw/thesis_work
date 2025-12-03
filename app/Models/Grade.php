@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class grades extends Model
+class Grade extends Model
 {
     public function submission()
     {
-        return $this->belongsTo(submissions::class);
+        return $this->belongsTo(Submission::class);
     }
 
 }

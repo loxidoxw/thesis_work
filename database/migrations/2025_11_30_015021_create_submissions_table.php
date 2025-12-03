@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('assignment_id')->constrained();
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
-            $table->text('answer')->nullable();
-            $table->string('file')->nullable();
+            $table->foreignId('lesson_id')->constrained();
+            $table->string('file_path')->nullable();
             $table->enum('status', ['not_submitted', 'submitted', 'graded'])->default('not_submitted');
             $table->timestamps();
         });

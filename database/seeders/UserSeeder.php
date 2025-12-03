@@ -14,11 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $courses = Course::factory()->count(5)->create();
+
         User::factory()
             ->count(10)
-            ->hasAttached(
-                Course::factory()->count(3)
-            )
+            ->state(['role' => 'student'])
+            ->hasAttached($courses)
             ->create();
     }
 }

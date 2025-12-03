@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use hasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['title', 'description', 'teacher_id', 'image'];
 
     public function sections()
     {
