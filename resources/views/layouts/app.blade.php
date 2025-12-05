@@ -33,8 +33,27 @@
                 @yield('content')
             </main>
         </div>
-        <footer>
-            <div class="w-full h-32 bg-gray-800"></div>
+        <footer class="bg-gray-800 text-gray-200 mt-12">
+            <div class="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">EduPlatform</h2>
+                    <p class="text-gray-400">Навчайся онлайн з найкращими курсами. Здобувай нові знання та навички зручно та швидко.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Корисні посилання</h3>
+                    <ul>
+                        <li><a href="#" class="hover:text-white transition-colors">Про нас</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Контакти</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Політика конфіденційності</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-700 mt-6 py-4 text-center text-gray-500">
+                &copy; {{ date('Y') }} EduPlatform. Всі права захищені.
+            </div>
         </footer>
     </body>
 </html>

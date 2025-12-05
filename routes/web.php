@@ -38,7 +38,10 @@ Route::middleware(['auth', 'verified'])->prefix('/course/{course}')->name('cours
 
 Route::middleware(['auth', 'verified'])->group(function () {
    Route::get('/lesson/{lesson}', [LessonsController::class, 'show'])->name('lesson.show');
-   Route::post('/lesson/{lesson}/submission', [SubmissionController::class, 'store'])->name('submission.store');;
+    Route::get('/lesson', [LessonsController::class, 'store'])->name('lesson.store');
+   Route::post('/lesson/{lesson}/submission', [SubmissionController::class, 'store'])->name('submission.store');
+    Route::get('submission/{submission}', [SubmissionController::class, 'show'])->name('submission.show');
+    Route::post('submission/{submission}/grade', [GradeController::class, 'store'])->name('grade.store');
 });
 
 Route::middleware('auth')->group(function () {

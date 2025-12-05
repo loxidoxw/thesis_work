@@ -13,9 +13,9 @@ class Lesson extends Model
     protected $casts = [
         'content' => 'array',
     ];
-    public function submission()
+    public function submissions()
     {
-        return $this->hasOne(Submission::class);
+        return $this->hasMany(Submission::class);
     }
     public function section()
     {
