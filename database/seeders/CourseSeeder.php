@@ -17,7 +17,7 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
         Course::factory()
-            ->count(10)
+            ->count(1)
             ->has(Section::factory()->count(5)
                  ->has(Lesson::factory()->count(3)
                  )

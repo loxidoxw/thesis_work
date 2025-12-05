@@ -36,7 +36,9 @@
                         </div>
                         <div id="modalOverlay"
                              class="hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
-                            <x-lesson-create-modal class="lesson-create-modal" :section="$section"
+                            <x-lesson-create-modal class="lesson-create-modal"
+                                                   :course="$course"
+                                                   :section="$section"
                                                    :nextOrder="$section->lessons->count() + 1"/>
                         </div>
 

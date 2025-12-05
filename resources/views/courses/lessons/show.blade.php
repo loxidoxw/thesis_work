@@ -2,21 +2,28 @@
 
     @section('content')
         <div class="bg-gray-100 min-h-screen py-8">
-
+            @csrf
             {{-- Верхній блок з датами --}}
             <div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6 mb-8">
                 <p class="text-sm">
-                    <strong>Початок приймання:</strong>  {{-- {{ $lesson->content['start_date'] }} --}}
+                    <strong>Початок приймання:</strong> {{ $lesson->content['start-date'] }}
                 </p>
                 <p class="text-sm">
                     <strong>Термін спливає:</strong> {{ $lesson->content['deadline'] }}
                 </p>
+                <p class="text-sm">
+                    <strong>Файл з завданням:</strong>
+                    <a href="{{ asset('storage/' . $lesson->content['file_path']) }}" class="text-blue-600 hover:underline">
+                        Файл
+                    </a>
+                </p>
             </div>
+
 
             <div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6">
 
 
-
+                @if (Auth::user()->role === 'student')
                 <h2 class="text-2xl font-semibold mb-4">Статус роботи</h2>
 
                 <div class="overflow-hidden border border-gray-200 rounded-lg">
@@ -49,14 +56,14 @@
 
                         <tr class="border-b">
                             <td class="bg-gray-50 p-3 font-medium">Залишилося часу</td>
-                            <td class="p-3 text-red-600">Завдання прострочено на: 50 днів 20 годин
+                            <td class="p-3 text-red-600">Завдання прострочено на:
                                 {{-- logic for deadline --}} </td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
-                @if (Auth::user()->role === 'student')
+
                 <form action="{{route('submission.store', $lesson->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                     <div>
@@ -79,7 +86,8 @@
                 @endif
 
                 @if (Auth::user()->role === 'teacher')
-                <h2 class="text-xl font-semibold mb-4">Сабмішини студентів</h2>
+
+                <h2 class="text-xl font-semibold mb-4">Список робіт студентів</h2>
 
                 <table class="w-full border rounded-lg overflow-hidden">
                     <thead class="bg-gray-100">
