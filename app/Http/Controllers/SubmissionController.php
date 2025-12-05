@@ -8,9 +8,9 @@ use App\Models\Submission;
 
 class SubmissionController extends Controller
 {
-    public function show()
+    public function show(Submission $submission)
     {
-        return view('courses.lessons.submissions.show');
+        return view('courses.submissions.show', compact('submission'));
     }
 
     public function store(Lesson $lesson, SubmissionStoreRequest $request)

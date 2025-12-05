@@ -8,14 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     use hasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'section_id',
+        'title',
+        'content',
+        'type',
+        'order',
+    ];
 
     protected $casts = [
         'content' => 'array',
     ];
-    public function submission()
+    public function submissions()
     {
-        return $this->hasOne(Submission::class);
+        return $this->hasMany(Submission::class);
     }
     public function section()
     {

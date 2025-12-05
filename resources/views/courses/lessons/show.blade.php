@@ -2,21 +2,28 @@
 
     @section('content')
         <div class="bg-gray-100 min-h-screen py-8">
-
+            @csrf
             {{-- Верхній блок з датами --}}
             <div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6 mb-8">
                 <p class="text-sm">
-                    <strong>Початок приймання:</strong>  {{-- {{ $lesson->content['start_date'] }} --}}
+                    <strong>Початок приймання:</strong> {{ $lesson->content['start-date'] }}
                 </p>
                 <p class="text-sm">
                     <strong>Термін спливає:</strong> {{ $lesson->content['deadline'] }}
                 </p>
+                <p class="text-sm">
+                    <strong>Файл з завданням:</strong>
+                    <a href="{{ asset('storage/' . $lesson->content['file_path']) }}" class="text-blue-600 hover:underline">
+                        Файл
+                    </a>
+                </p>
             </div>
+
 
             <div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6">
 
 
-
+                @if (Auth::user()->role === 'student')
                 <h2 class="text-2xl font-semibold mb-4">Статус роботи</h2>
 
                 <div class="overflow-hidden border border-gray-200 rounded-lg">
@@ -25,29 +32,31 @@
 
                         <tr class="border-b">
                             <td class="bg-gray-50 w-1/4 p-3 font-medium">Статус роботи</td>
-                                @if ( $lesson->submission->status === 'submitted' )
-                                <td class="p-3 bg-green-400">
-                                    Здано
-                                </td>
-                                @elseif ( $lesson->submission->status === 'submitted' )
-                                    <td class="p-3 bg-green-400">
-                                        Оцінено
-                                    </td>
-                                @else
+                                @if  ($submission === null )
                                 <td class="p-3">
                                     Не здано
                                 </td>
-                               @endif
+                                @elseif ( $submission->status === 'graded' )
+                                    <td class="p-3 text-blue-600 hover:underline">
+                                        Оцінено
+                                    </td>
+                                @elseif ( $submission->status === 'submitted' )
+                                <td class="p-3 bg-green-400">
+                                    Здано
+                                </td>
+                                @else
+                                <td class="p-3">Не здано</td>
+                                @endif
                         </tr>
 
                         <tr class="border-b">
                             <td class="bg-gray-50 p-3 font-medium">Оцінка</td>
-                            <td class="p-3">{{-- {{ $lesson->content['grade_status'] }} --}}</td>
+                            <td class="p-3">{{ $submission->grade?->grade ?? '—' }}</td>
                         </tr>
 
                         <tr class="border-b">
                             <td class="bg-gray-50 p-3 font-medium">Залишилося часу</td>
-                            <td class="p-3 text-red-600">Завдання прострочено на: 50 днів 20 годин
+                            <td class="p-3 text-red-600">Завдання прострочено на:
                                 {{-- logic for deadline --}} </td>
                         </tr>
 
@@ -74,7 +83,54 @@
                     </button>
                 </div>
                 </form>
+                @endif
 
+                @if (Auth::user()->role === 'teacher')
+
+                <h2 class="text-xl font-semibold mb-4">Список робіт студентів</h2>
+
+                <table class="w-full border rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-3 text-left">Студент</th>
+                        <th class="p-3 text-left">Статус</th>
+                        <th class="p-3 text-left">Оцінка</th>
+                        <th class="p-3 text-left">Дія</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($lesson->submissions as $submission)
+                        <tr class="border-t">
+                            <td class="p-3">{{ $submission->student->name }}</td>
+
+                            <td class="p-3">
+                                @if($submission->file_path)
+                                    <span class="text-green-600 font-semibold">Здано</span>
+                                @else
+                                    <span class="text-red-600 font-semibold">Не здано</span>
+                                @endif
+                            </td>
+
+                            <td class="p-3">
+                                @if($submission->grade)
+                                    {{ $submission->grade->grade }}/100 балів
+                                @else
+                                    -
+                                @endif
+                            </td>
+
+                            <td class="p-3">
+                                <a href="{{route('submission.show', $submission->id)}}"
+                                   class="text-blue-600 hover:underline">
+                                    Переглянути
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                @endif
                 <div class="mt-10 bg-gray-50 border rounded-xl p-5 flex items-center justify-between">
 
                     <div class="flex items-center gap-3">

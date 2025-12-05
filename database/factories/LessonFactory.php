@@ -20,12 +20,13 @@ class LessonFactory extends Factory
         return [
             'section_id' => $this->faker->numberBetween(1, 10),
             'title' => $this->faker->title(),
-            'content' => $type === 'lecture'
+            'content' => $type === 'assignment'
               ? [
                 'file_url' => 'https://drive.google.com/file/d/1yqe3o1CYC0Y9szzIalhszZx-tGCht6d9/view',
                 ]
                 :[
                     'file_url' => 'https://drive.google.com/file/d/1vSNCsGf6_qYqS5dOvTnq5hCmJVqchfwX/view',
+                    'start_date' => '2025-10-23',
                     'deadline' => '2025-11-23'
                  ],
             'type' => $type,

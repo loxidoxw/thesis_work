@@ -24,6 +24,7 @@ Route::middleware(['auth', 'verified', 'role:teacher'])->group(function () {
     Route::post('/course', [CourseController::class, 'store'])->name('course.store');
     Route::get('/course/{course}/section/create', [SectionController::class, 'create'])->name('section.create');
     Route::post('/course/{course}/section', [SectionController::class, 'store'])->name('section.store');
+    Route::post('/course/{course}/lesson', [LessonsController::class, 'store'])->name('lesson.store');
 });
 
 Route::middleware(['auth', 'verified'])->prefix('/course/{course}')->name('course.')->group(function ()
@@ -38,7 +39,9 @@ Route::middleware(['auth', 'verified'])->prefix('/course/{course}')->name('cours
 
 Route::middleware(['auth', 'verified'])->group(function () {
    Route::get('/lesson/{lesson}', [LessonsController::class, 'show'])->name('lesson.show');
-   Route::post('/lesson/{lesson}/submission', [SubmissionController::class, 'store'])->name('submission.store');;
+   Route::post('/lesson/{lesson}/submission', [SubmissionController::class, 'store'])->name('submission.store');
+    Route::get('submission/{submission}', [SubmissionController::class, 'show'])->name('submission.show');
+    Route::post('submission/{submission}/grade', [GradeController::class, 'store'])->name('grade.store');
 });
 
 Route::middleware('auth')->group(function () {
