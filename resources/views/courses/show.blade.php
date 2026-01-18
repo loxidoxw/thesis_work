@@ -4,6 +4,16 @@
     <x-course-navbar :course="$course" active="overview"/>
     @csrf
     <h3 class="font-bold text-2xl w-full max-w-5xl mx-auto mt-6">{{$course->title}}</h3>
+
+    <a
+        href="{{ route('course.archive', $course) }}"
+        class="block text-xl w-full max-w-5xl mx-auto mt-2
+        text-gray-500
+        hover:underline
+        hover:text-gray-700">
+        Завантажити курс (ZIP)
+    </a>
+
     <div aria-hidden="true"
          class="w-full max-w-5xl mx-auto mt-6 bg-white rounded-2xl border border-gray-100 shadow-md p-8 min-h-[220px]">
         @if (Auth::user()->role === 'teacher')
@@ -29,28 +39,31 @@
 
                     @if (Auth::user()->role === 'teacher')
                         <div class="absolute right-4 ">
-                            <button id="openLessonModal"
-                                    class="button-lesson bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-2xl">
+                            <button
+                                    class="open-lesson-modal button-lesson bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-2xl">
                                 Додати Урок
                             </button>
                         </div>
-                        <div id="modalOverlay"
-                             class="hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
-                            <x-lesson-create-modal class="lesson-create-modal"
-                                                   :course="$course"
-                                                   :section="$section"
-                                                   :nextOrder="$section->lessons->count() + 1"/>
+                        <div class="lesson-modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                            <x-lesson-create-modal
+                                :course="$course"
+                                :section="$section"
+                                :nextOrder="$section->lessons->count() + 1"/>
                         </div>
 
                         <script>
-                            $(document).ready(function () {
-                                $('#openLessonModal').on('click', function () {
-                                    $('#modalOverlay').removeClass('hidden');
-                                })
-                                $('.close-model').on('click', function () {
-                                    $('#modalOverlay').addClass('hidden');
-                                })
-                            })
+                            $(document).on('click', '.open-lesson-modal', function () {
+                                $(this)
+                                    .closest('.w-full.bg-white.rounded-2xl')
+                                    .find('.lesson-modal-overlay')
+                                    .removeClass('hidden');
+                            });
+
+                            $(document).on('click', '.close-model', function () {
+                                $(this)
+                                    .closest('.lesson-modal-overlay')
+                                    .addClass('hidden');
+                            });
                         </script>
 
                     @endif

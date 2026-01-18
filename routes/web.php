@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Course\ActivitiesController;
 use App\Http\Controllers\Course\CompetenciesController;
 use App\Http\Controllers\Course\GradeController;
 use App\Http\Controllers\Course\ParticipantsController;
+use App\Http\Controllers\CourseArchiveController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\ProfileController;
@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified', 'role:teacher'])->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('/course/{course}')->name('course.')->group(function ()
 {
     Route::get('/', [CourseController::class, 'show'])->name('show');
+    Route::get('/archive-download', [CourseArchiveController::class, 'archiveDownload'])->name('archive');
     Route::get('/participants', [ParticipantsController::class, 'index'])->name('participants');
     Route::get('/grade', [GradeController::class, 'index'])->name('grade');
     Route::get('/competencies', [CompetenciesController::class, 'index'])->name('competencies');
