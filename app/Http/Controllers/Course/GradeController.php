@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class GradeController extends Controller
 {
+    public function index()
+    {
+        return view('courses.grades');
+    }
     public function store(GradeStoreRequest $request, Submission $submission)
     {
 
