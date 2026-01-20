@@ -39,32 +39,29 @@
                 </select>
             </div>
 
-                <!-- Input lecture -->
+            <!-- Input lecture -->
             <div id="lecture_input" class="mb-4">
-                <label>Файл лекції</label>
-                <input type="file" name="content[file_path]" class="form-control">
+                <div id="lecture_link_block" class="">
+                    <label>Посилання на лекцію (Google Drive)</label>
+                    <input type="url" name="file_url" class="form-control">
+                </div>
             </div>
 
-            <!-- Input lecture  V2
-            <div id="lecture_input" class="mb-4">
-                <label>Файл лекції</label>
-                <input type="text" name="content[file_url]" class="form-control">
-            </div>
-            -->
 
             <!-- Input practice task -->
             <div id="practice_input" class="mb-4 d-none">
-                <label>Файл з практичним завданням</label>
-                <input type="file" name="content[file_path]" class="form-control">
+
+                <label>Файл з матеріалом уроку</label>
+                <input type="file" name="file_path" class="form-control">
 
                 <label class="mt-3">Опис завдання</label>
-                <textarea name="content[task_description]" class="form-control mb-4"></textarea>
+                <textarea name="task_description" class="form-control mb-4"></textarea>
 
                 <label>Початок приймання</label>
-                <input type="date" name="content[start-date]" class="form-control mb-4">
+                <input type="date" name="start_date" class="form-control mb-4">
 
                 <label>Кінець приймання</label>
-                <input type="date" name="content[deadline]" class="form-control mb-4">
+                <input type="date" name="deadline" class="form-control mb-4">
             </div>
 
             <script>

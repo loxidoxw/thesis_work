@@ -11,9 +11,13 @@ class Lesson extends Model
     protected $fillable = [
         'section_id',
         'title',
-        'content',
         'type',
         'order',
+        'task_description',
+        'start_date',
+        'deadline',
+        'file_path',
+        'file_url'
     ];
 
     protected $casts = [
