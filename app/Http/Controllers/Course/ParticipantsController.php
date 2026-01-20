@@ -11,9 +11,7 @@ class ParticipantsController extends Controller
 {
     public function index(Course $course)
     {
-        $users = $course->users()
-//            ->where('users.id', '!=', auth()->id())
-            ->get();
+        $users = $course->users()->get();
         return view('courses.participants', compact('users', 'course'));
     }
 }

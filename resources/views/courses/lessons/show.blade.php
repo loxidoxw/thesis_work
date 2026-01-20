@@ -6,14 +6,14 @@
             {{-- Верхній блок з датами --}}
             <div class="max-w-7xl mx-auto bg-white rounded-xl shadow p-6 mb-8">
                 <p class="text-sm">
-                    <strong>Початок приймання:</strong> {{ $lesson->content['start-date'] }}
+                    <strong>Початок приймання:</strong> {{ $lesson->start_date }}
                 </p>
                 <p class="text-sm">
-                    <strong>Термін спливає:</strong> {{ $lesson->content['deadline'] }}
+                    <strong>Термін спливає:</strong> {{ $lesson->deadline }}
                 </p>
                 <p class="text-sm">
                     <strong>Файл з завданням:</strong>
-                    <a href="{{ asset('storage/' . $lesson->content['file_path']) }}" class="text-blue-600 hover:underline">
+                    <a href="{{ asset('storage/' . $lesson->file_path) }}" class="text-blue-600 hover:underline">
                         Файл
                     </a>
                 </p>
@@ -131,38 +131,84 @@
                     </tbody>
                 </table>
                 @endif
-                <div class="mt-10 bg-gray-50 border rounded-xl p-5 flex items-center justify-between">
+                    @php
 
-                    <div class="flex items-center gap-3">
-                        <div class="text-gray-500">‹</div>
-                        <div>
-                            <p class="text-xs text-gray-500">Попередня діяльність</p>
-                            <a href="#" class="text-blue-600 hover:underline">
-                                Task for the lab 1
-                            </a>
+                        $allLessons = $lesson->section->lessons()->orderBy('order')->get();
+
+                        $currentIndex = $allLessons->search(function($item) use ($lesson) {
+                            return $item->id === $lesson->id;
+                        });
+
+                        $previousLesson = $currentIndex > 0 ? $allLessons[$currentIndex - 1] : null;
+                        $nextLesson = $currentIndex < $allLessons->count() - 1 ? $allLessons[$currentIndex + 1] : null;
+                    @endphp
+
+                    <div class="mt-10 bg-gray-50 border rounded-xl p-5 flex items-center justify-between">
+
+                        <div class="flex items-center gap-3">
+                            @if($previousLesson)
+                                <a href="{{ route('lesson.show', $previousLesson->id) }}"
+                                   class="flex items-center gap-3 hover:opacity-70 transition">
+                                    <div class="text-gray-500 text-xl">‹</div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Попередня діяльність</p>
+                                        <span class="text-blue-600 hover:underline">
+                        {{ $previousLesson->title }}
+                    </span>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="flex items-center gap-3 opacity-40">
+                                    <div class="text-gray-400 text-xl">‹</div>
+                                    <div>
+                                        <p class="text-xs text-gray-400">Попередня діяльність</p>
+                                        <span class="text-gray-400">Немає</span>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="w-1/3">
+                            <select class="w-full border rounded-md px-3 py-2 text-sm"
+                                    onchange="if(this.value) window.location.href = this.value">
+                                <option value="">Перейти до...</option>
+                                @foreach($allLessons as $lessonItem)
+                                    <option value="{{ route('lesson.show', $lessonItem->id) }}"
+                                        {{ $lessonItem->id === $lesson->id ? 'selected' : '' }}>
+                                        {{ $lessonItem->order }}. {{ $lessonItem->title }}
+                                        @if($lessonItem->type === 'lecture')
+                                            <span>(Лекція)</span>
+                                        @else
+                                            <span>(Практичне завдання)</span>
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-right">
+                            @if($nextLesson)
+                                <a href="{{ route('lesson.show', $nextLesson->id) }}"
+                                   class="flex items-center gap-3 hover:opacity-70 transition">
+                                    <div>
+                                        <p class="text-xs text-gray-500">Наступна діяльність</p>
+                                        <span class="text-blue-600 hover:underline">
+                        {{ $nextLesson->title }}
+                    </span>
+                                    </div>
+                                    <div class="text-gray-500 text-xl">›</div>
+                                </a>
+                            @else
+                                <div class="flex items-center gap-3 opacity-40">
+                                    <div>
+                                        <p class="text-xs text-gray-400">Наступна діяльність</p>
+                                        <span class="text-gray-400">Немає</span>
+                                    </div>
+                                    <div class="text-gray-400 text-xl">›</div>
+                                </div>
+                            @endif
                         </div>
                     </div>
-
-                    <div class="w-1/3">
-                        <select class="w-full border rounded-md px-3 py-2 text-sm">
-                            <option>Перейти до...</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center gap-3 text-right">
-                        <div>
-                            <p class="text-xs text-gray-500">Наступна діяльність</p>
-                            <a href="#" class="text-blue-600 hover:underline">
-                                Classwork presentation
-                            </a>
-                        </div>
-                        <div class="text-gray-500">›</div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
     @endsection
 
 

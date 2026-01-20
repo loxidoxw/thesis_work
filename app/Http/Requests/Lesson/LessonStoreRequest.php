@@ -24,9 +24,14 @@ class LessonStoreRequest extends FormRequest
         return [
             'section_id' => 'required|integer',
             'title' => 'required|string|max:255',
-            'content' => 'array',
             'type' => 'required|string',
-            'order' => 'required|integer'
+            'order' => 'required|integer',
+
+            'file_path' => 'nullable|file|mimes:pdf,word,docx,txt',
+            'file_url' => 'nullable|url',
+            'task_description' => 'nullable|required_if:type,assignment|string',
+            'start_date' => 'nullable|required_if:type,assignment|date',
+            'deadline' => 'nullable|required_if:type,assignment|date|after_or_equal:start_date'
         ];
     }
 }
