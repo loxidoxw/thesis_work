@@ -17,7 +17,7 @@ class Section extends Model
 
     public function lessons(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class)->orderBy('order');
     }
 
 }

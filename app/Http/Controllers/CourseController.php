@@ -31,7 +31,7 @@ class CourseController extends Controller
     }
     public function show(Course $course) : View
     {
-        $sections = $course->sections()->with('lessons')->get();
+        $sections = $course->sections()->with('lessons')->orderBy('order')->get();
 
         $lessons = $sections->pluck('lessons')->flatten();
 
